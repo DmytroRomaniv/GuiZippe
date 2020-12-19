@@ -1,14 +1,11 @@
-﻿using GZipTest.Compression.Responses;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using GZipTest.Compression.Results;
 
 namespace GZipTest.Compression
 {
     public interface ICompressionService
     {
-        CompressionResponse Compress(string originalFileName, string archiveFileName);
+        CompressionResult Compress(string originalFileName, string archiveFileName);
 
-        CompressionResponse Decompress(string archiveFileName, string newFileName);
+        CompressionResult Decompress(string archiveFileName, string newFileName);
     }
 }

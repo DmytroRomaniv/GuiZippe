@@ -1,11 +1,9 @@
-﻿using GZipTest.Compression.Responses;
+﻿using GZipTest.Compression.Results;
 using GZipTest.Logging;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
-using System.Text;
 using System.Threading;
 
 namespace GZipTest.Compression
@@ -81,12 +79,12 @@ namespace GZipTest.Compression
             this.logger = logger ?? new ConsoleLogger();
         }
 
-        public CompressionResponse Compress(string originalFileName, string archiveFileName)
+        public CompressionResult Compress(string originalFileName, string archiveFileName)
         {
             if(string.IsNullOrEmpty(originalFileName) || string.IsNullOrEmpty(archiveFileName))
             {
                 logger.Warning("File name cannot be empty");
-                return CompressionResponse.NotFinished;
+                return CompressionResult.NotFinished;
             }
 
             archiveFileName = AddArchiveExtension(archiveFileName);
@@ -97,18 +95,18 @@ namespace GZipTest.Compression
             return compressionResponse;
         }
 
-        public CompressionResponse Decompress(string archiveFileName, string newFileName)
+        public CompressionResult Decompress(string archiveFileName, string newFileName)
         {
             if (string.IsNullOrEmpty(archiveFileName) || string.IsNullOrEmpty(newFileName))
             {
                 logger.Warning("File name cannot be empty");
-                return CompressionResponse.NotFinished;
+                return CompressionResult.NotFinished;
             }
 
             if (!IsFileArchive(archiveFileName))
             {
                 logger.Warning($"File: {archiveFileName}, is not a compressed file.");
-                return CompressionResponse.NotFinished;
+                return CompressionResult.NotFinished;
             }    
 
             var compressionMode = CompressionMode.Decompress;
@@ -148,12 +146,12 @@ namespace GZipTest.Compression
             return archiveFileExtentions.Any(e => fileName.EndsWith(e));
         }
 
-        private CompressionResponse RunCompression(string originalFileName, string newFileName, CompressionMode compressionMode)
+        private CompressionResult RunCompression(string originalFileName, string newFileName, CompressionMode compressionMode)
         {
             if (!FileExists(originalFileName))
             {
                 logger.Warning($"File: {originalFileName}, does not exist.");
-                return CompressionResponse.NotFinished;
+                return CompressionResult.NotFinished;
             }
 
             SetDefaultValuesForIndexes();
@@ -194,7 +192,7 @@ namespace GZipTest.Compression
                 logger.Error($"A generic exception occured during {compressionMode}: {originalFileName}. {exception.Message}");
             }
 
-            return IsCanceled ? CompressionResponse.NotFinished : CompressionResponse.Finished;
+            return IsCanceled ? CompressionResult.NotFinished : CompressionResult.Finished;
         }
 
         private void RunParallel(Action<Stream, Stream> copyAction, Stream inputStream, Stream outputStream)

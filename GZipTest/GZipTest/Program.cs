@@ -1,16 +1,7 @@
 ﻿using GZipTest.Compression;
 using GZipTest.Logging;
 using GZipTest.Parsing;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Management;
-using System.Security.Cryptography;
-using System.Text;
 using System.Threading;
-using System.Timers;
 
 namespace GZipTest
 {
@@ -34,7 +25,6 @@ namespace GZipTest
 
         public static int Main(string[] args)
         {
-            //args = new string[] { "decompress", "huge_dummy_file.gz", "new_huge_dummy_file" };
             if(parsingService.TryParse(args))
             {
                 int result;
@@ -56,22 +46,6 @@ namespace GZipTest
             }
 
             return 1;
-            //using(var md5 = MD5.Create())
-            //{
-            //    byte[] originalFileHash;
-            //    byte[] newFileHash;
-            //    using(var stream = File.OpenRead(fileName))
-            //    {
-            //        originalFileHash = md5.ComputeHash(stream);
-            //    }
-
-            //    using(var stream = File.OpenRead(newFile))
-            //    {
-            //        newFileHash = md5.ComputeHash(stream);
-            //    }
-
-            //    Console.WriteLine(originalFileHash.SequenceEqual(newFileHash));
-            //}
         }
     }
 }

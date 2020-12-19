@@ -1,8 +1,4 @@
-﻿using GZipTest.Compression;
-using GZipTest.Logging;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using GZipTest.Logging;
 
 namespace GZipTest.Parsing
 {
